@@ -11,12 +11,20 @@
 </head>
 <body>
     <!-- ===== HEADER / NAVBAR ===== -->
+ codex/add-hamburger-menu-and-scroll-effects
+    <header class="site-header" data-header id="header">
+
     <header class="site-header" data-header>
+ main
         <div class="container nav" data-nav>
             <a class="logo" href="#inicio" aria-label="Logotipo Vie FIVE">
                 <span>V</span><span>ie</span><span>FIVE</span>
             </a>
+ codex/add-hamburger-menu-and-scroll-effects
+            <nav class="nav-links" data-nav-menu id="nav-links">
+
             <nav class="nav-links" data-nav-menu>
+ main
                 <a href="#produtos">Produtos</a>
                 <div class="dropdown" data-dropdown>
                     <button type="button" class="dropdown-toggle" data-dropdown-toggle aria-haspopup="true" aria-expanded="false">Valores ▾</button>
@@ -34,7 +42,11 @@
                 <a class="btn btn-outline btn-nav" href="#contato">Fale com vendas</a>
                 <a class="btn btn-primary btn-nav" href="#produtos">Comprar</a>
             </div>
+ codex/add-hamburger-menu-and-scroll-effects
+            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-toggle id="hamburger">
+
             <button class="hamburger" type="button" aria-label="Abrir menu" data-menu-toggle>
+ main
                 <span class="line1"></span>
                 <span class="line2"></span>
                 <span class="line3"></span>
@@ -176,7 +188,11 @@
                 <a class="btn btn-outline btn-nav" href="mailto:contato@exemplo.com">contato@exemplo.com</a>
             </div>
             <div class="contact-card reveal">
+ codex/add-hamburger-menu-and-scroll-effects
+                <form class="form-grid" id="contact-form" novalidate>
+
                 <form class="form-grid" novalidate>
+ main
                     <div class="form-group">
                         <label for="nome">Nome</label>
                         <input id="nome" name="nome" type="text" placeholder="Digite seu nome">
@@ -189,7 +205,11 @@
                         <label for="mensagem">Mensagem</label>
                         <textarea id="mensagem" name="mensagem" placeholder="Conte rapidamente o que você precisa"></textarea>
                     </div>
+ codex/add-hamburger-menu-and-scroll-effects
+                    <div class="form-status" id="form-status" aria-live="polite"></div>
+
                     <div class="form-status" aria-live="polite"></div>
+ main
                     <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
                         <button class="btn btn-outline btn-nav btn-full" type="reset">Limpar</button>
                         <button class="btn btn-primary btn-nav" type="submit">Enviar mensagem</button>
@@ -222,6 +242,50 @@
                     <p class="value-text">Inclua cobertura, canais e horários de atendimento.</p>
                 </article>
             </div>
+ codex/add-hamburger-menu-and-scroll-effects
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="footer-title">Vie FIVE</div>
+                    <p>Template pensado para e-commerces que precisam lançar rápido e vender melhor.</p>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-title">Navegação</div>
+                    <div class="footer-links-group">
+                        <a href="#produtos">Produtos</a>
+                        <a href="#valores">Valores</a>
+                        <a href="#contato">Contato</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-title">Suporte</div>
+                    <div class="footer-links-group">
+                        <a href="#">Status do pedido</a>
+                        <a href="#">Políticas</a>
+                        <a href="#">Ajuda</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-title">Contato</div>
+                    <div class="footer-links-group">
+                        <a href="mailto:contato@exemplo.com">contato@exemplo.com</a>
+                        <a href="tel:+5511999999999">+55 11 99999-9999</a>
+                        <span>Seg - Sex, 9h às 18h</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2024 Vie FIVE — Template HTML5 responsivo com placeholders prontos para edição.</div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
         </div>
     </section>
 
@@ -329,5 +393,6 @@
 
         revealElements.forEach((el) => observer.observe(el));
     </script>
+ main
 </body>
 </html>

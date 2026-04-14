@@ -180,6 +180,13 @@ ul {
     color: var(--dark);
 }
 
+ codex/add-hamburger-menu-and-scroll-effects
+.nav-links a.active {
+    color: var(--primary);
+}
+
+
+ main
 .nav-links .nav-cta {
     margin-top: 6px;
 }
