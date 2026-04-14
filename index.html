@@ -67,6 +67,11 @@
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
+    header.scrolled {
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+      border-color: rgba(226, 232, 240, 0.6);
+    }
+
     .nav {
       display: flex;
       align-items: center;
@@ -88,10 +93,17 @@
     }
 
     .nav-links {
+      list-style: none;
       display: flex;
       align-items: center;
       gap: 16px;
       font-weight: 600;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: flex;
+      align-items: center;
     }
 
     .nav-links a,
@@ -108,7 +120,12 @@
       color: var(--color-primary-strong);
     }
 
-    .dropdown {
+    .nav-links a.active {
+      color: var(--color-primary-strong);
+      background: rgba(30, 64, 175, 0.08);
+    }
+
+    .has-dropdown {
       position: relative;
     }
 
@@ -139,7 +156,8 @@
       color: var(--color-primary-strong);
     }
 
-    .dropdown.open .dropdown-menu {
+    .has-dropdown.open .dropdown-menu,
+    .has-dropdown:hover .dropdown-menu {
       display: flex;
     }
 
@@ -401,6 +419,82 @@
       font-size: 14px;
     }
 
+    /* =============== Reveal Animations =============== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============== Carousel =============== */
+    .snacks-carousel-wrapper {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .snacks-carousel {
+      display: flex;
+      gap: 18px;
+      transition: transform 0.4s ease;
+      will-change: transform;
+    }
+
+    .carousel-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: var(--color-secondary);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .carousel-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+      background: #f8fafc;
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      background: #e2e8f0;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-border);
+      border: 2px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--color-primary);
+      border-color: rgba(30, 64, 175, 0.18);
+      transform: scale(1.05);
+    }
+
     /* =============== Contato =============== */
     .contact-card {
       background: var(--color-surface);
@@ -447,6 +541,20 @@
       resize: vertical;
     }
 
+    #form-status {
+      font-weight: 700;
+      margin-top: 6px;
+      min-height: 20px;
+    }
+
+    #form-status.error {
+      color: #b91c1c;
+    }
+
+    #form-status.success {
+      color: #15803d;
+    }
+
     /* =============== Footer =============== */
     footer {
       background: #0b1223;
@@ -485,7 +593,7 @@
     /* =============== Responsive =============== */
     @media (max-width: 900px) {
       .nav-links {
-        position: absolute;
+        position: fixed;
         top: 70px;
         left: 0;
         right: 0;
@@ -495,10 +603,13 @@
         background: var(--color-surface);
         border-bottom: 1px solid var(--color-border);
         display: none;
+        z-index: 19;
       }
 
+      .nav-links.open,
       .nav.open .nav-links {
         display: flex;
+        position: fixed;
       }
 
       .cta.desktop-only {
@@ -514,6 +625,21 @@
         align-items: flex-start;
       }
     }
+
+    @media (max-width: 700px) {
+      .snacks-carousel-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .snacks-carousel {
+        flex-wrap: wrap;
+        transform: none !important;
+      }
+
+      .carousel-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -521,21 +647,21 @@
   <header>
     <div class="container nav" data-nav>
       <div class="logo" aria-label="Logotipo com inicial">V</div>
-      <div class="nav-links" data-nav-menu>
-        <a href="#produtos">Produtos</a>
-        <div class="dropdown" data-dropdown>
-          <button type="button" data-dropdown-toggle aria-haspopup="true" aria-expanded="false">Valores ▾</button>
-          <div class="dropdown-menu" role="menu">
-            <a href="#valores" role="menuitem">Qualidade premium</a>
-            <a href="#valores" role="menuitem">Entrega rápida</a>
-            <a href="#valores" role="menuitem">Suporte próximo</a>
-          </div>
-        </div>
-        <a href="#contato">Contato</a>
-        <a href="#faq">FAQ</a>
-        <a class="cta desktop-only" href="#contato">Pedir agora</a>
-      </div>
-      <button class="hamburger" type="button" aria-label="Abrir menu" data-menu-toggle>
+      <ul class="nav-links" id="nav-links" data-nav-menu>
+        <li><a href="#produtos">Produtos</a></li>
+        <li class="has-dropdown" data-dropdown>
+          <button type="button" class="dropdown-toggle" data-dropdown-toggle aria-haspopup="true" aria-expanded="false">Valores ▾</button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#valores" role="menuitem">Qualidade premium</a></li>
+            <li><a href="#valores" role="menuitem">Entrega rápida</a></li>
+            <li><a href="#valores" role="menuitem">Suporte próximo</a></li>
+          </ul>
+        </li>
+        <li><a href="#contato">Contato</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li class="desktop-only"><a class="cta" href="#contato">Pedir agora</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false" data-menu-toggle>
         <span class="line1"></span>
         <span class="line2"></span>
         <span class="line3"></span>
@@ -544,7 +670,7 @@
   </header>
 
   <!-- =============== Hero =============== -->
-  <section class="hero" id="inicio">
+  <section class="hero reveal" id="inicio">
     <div class="container hero-grid">
       <div class="hero-text">
         <div class="badge"><span class="dot" aria-hidden="true"></span>● Novo produto</div>
@@ -555,7 +681,7 @@
           <a class="ghost" href="#contato">Pedir agora</a>
         </div>
       </div>
-      <div class="hero-card">
+      <div class="hero-card reveal">
         <h3>Template modular</h3>
         <p>Header sticky com menu hamburger, hero destacado com badge animado, grid de 6 produtos, cartões de valores, formulário de contato e footer organizado.</p>
       </div>
@@ -563,7 +689,7 @@
   </section>
 
   <!-- =============== Produtos =============== -->
-  <section class="section" id="produtos">
+  <section class="section reveal" id="produtos">
     <div class="container">
       <div class="section-header">
         <div>
@@ -572,79 +698,78 @@
         </div>
         <a class="ghost" href="#contato">Fale com vendas</a>
       </div>
-      <div class="grid">
-        <!-- Card 1 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
-        <!-- Card 2 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
-        <!-- Card 3 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
-        <!-- Card 4 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
-        <!-- Card 5 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
-        <!-- Card 6 -->
-        <article class="product-card">
-          <div class="product-image">
-            <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
-          </div>
-          <div class="product-body">
-            <h3 class="product-title">Título do Produto</h3>
-            <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
-            <p class="product-price">R$ XX,XX</p>
-          </div>
-        </article>
+      <div class="snacks-carousel-wrapper">
+        <button class="carousel-btn carousel-btn-prev" type="button" aria-label="Produto anterior" data-carousel-prev><</button>
+        <div class="snacks-carousel" data-carousel>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-image">
+              <img src="https://via.placeholder.com/320x220?text=Imagem" alt="Imagem do produto" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">Título do Produto</h3>
+              <p class="product-desc">Descrição curta do produto que cabe em até 80 caracteres.</p>
+              <p class="product-price">R$ XX,XX</p>
+            </div>
+          </article>
+        </div>
+        <button class="carousel-btn carousel-btn-next" type="button" aria-label="Próximo produto" data-carousel-next>></button>
       </div>
+      <div class="carousel-dots" data-carousel-dots aria-label="Selecionar produto"></div>
     </div>
   </section>
 
   <!-- =============== Valores / Diferenciais =============== -->
-  <section class="section" id="valores">
+  <section class="section reveal" id="valores">
     <div class="container">
       <div class="section-header">
         <div>
@@ -654,17 +779,17 @@
         <a class="ghost" href="#faq">Ver FAQ</a>
       </div>
       <div class="grid">
-        <article class="value-card">
+        <article class="value-card reveal">
           <div class="value-icon">Q</div>
           <h3 class="value-title">Qualidade premium</h3>
           <p class="value-text">Materiais selecionados, curadoria rígida e acabamento impecável em cada item.</p>
         </article>
-        <article class="value-card">
+        <article class="value-card reveal">
           <div class="value-icon">R</div>
           <h3 class="value-title">Entrega rápida</h3>
           <p class="value-text">Logística inteligente, rastreamento completo e prazos que cabem no seu cronograma.</p>
         </article>
-        <article class="value-card">
+        <article class="value-card reveal">
           <div class="value-icon">S</div>
           <h3 class="value-title">Suporte próximo</h3>
           <p class="value-text">Atendimento humano, ágil e disponível para ajudar em qualquer etapa da compra.</p>
@@ -674,7 +799,7 @@
   </section>
 
   <!-- =============== Contato =============== -->
-  <section class="section" id="contato">
+  <section class="section reveal" id="contato">
     <div class="container">
       <div class="section-header">
         <div>
@@ -683,8 +808,8 @@
         </div>
         <a class="ghost" href="mailto:contato@exemplo.com">contato@exemplo.com</a>
       </div>
-      <div class="contact-card">
-        <form class="form-grid">
+      <div class="contact-card reveal">
+        <form class="form-grid" id="contact-form">
           <div>
             <label for="nome">Nome</label>
             <input id="nome" name="nome" type="text" placeholder="Digite seu nome">
@@ -700,13 +825,16 @@
           <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end;">
             <button class="cta" type="submit">Enviar mensagem</button>
           </div>
+          <div style="grid-column: 1 / -1;">
+            <p id="form-status" aria-live="polite"></p>
+          </div>
         </form>
       </div>
     </div>
   </section>
 
   <!-- =============== FAQ Placeholder =============== -->
-  <section class="section" id="faq">
+  <section class="section reveal" id="faq">
     <div class="container">
       <div class="section-header">
         <div>
@@ -715,15 +843,15 @@
         </div>
       </div>
       <div class="grid">
-        <article class="value-card">
+        <article class="value-card reveal">
           <h3 class="value-title">Trocas e devoluções</h3>
           <p class="value-text">Descreva prazos e condições de forma objetiva.</p>
         </article>
-        <article class="value-card">
+        <article class="value-card reveal">
           <h3 class="value-title">Formas de pagamento</h3>
           <p class="value-text">Cartão, Pix, boleto ou outras opções que você oferecer.</p>
         </article>
-        <article class="value-card">
+        <article class="value-card reveal">
           <h3 class="value-title">Garantias e suporte</h3>
           <p class="value-text">Inclua cobertura, canais e horários de atendimento.</p>
         </article>
@@ -769,40 +897,6 @@
     </div>
   </footer>
 
-  <script>
-    const nav = document.querySelector('[data-nav]');
-    const navMenu = document.querySelector('[data-nav-menu]');
-    const menuToggle = document.querySelector('[data-menu-toggle]');
-    const dropdown = document.querySelector('[data-dropdown]');
-    const dropdownToggle = document.querySelector('[data-dropdown-toggle]');
-
-    function closeMenuOnLarge() {
-      if (window.innerWidth > 900) {
-        nav.classList.remove('open');
-        navMenu.style.display = '';
-      }
-    }
-
-    menuToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      const expanded = nav.classList.contains('open');
-      menuToggle.setAttribute('aria-expanded', expanded);
-    });
-
-    dropdownToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = dropdown.classList.toggle('open');
-      dropdownToggle.setAttribute('aria-expanded', isOpen);
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.remove('open');
-        dropdownToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    window.addEventListener('resize', closeMenuOnLarge);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
