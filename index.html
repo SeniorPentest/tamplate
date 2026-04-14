@@ -51,7 +51,7 @@
                 <p class="hero-description">Landing responsiva, rápida e focada em conversão para qualquer catálogo. Use os placeholders para simular seus produtos e testar a experiência completa.</p>
                 <div class="hero-buttons">
                     <a class="btn btn-primary" href="#produtos">Ver produtos</a>
-                    <a class="btn btn-primary" href="#" id="mercado-pago-btn">Ir para o Checkout</a>
+                    <a class="btn btn-primary" href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=SEU_INIT_POINT" id="mercado-pago-btn">Ir para o Checkout</a>
                     <a class="btn btn-outline" href="#contato">Pedir agora</a>
                 </div>
                 <div class="hero-stats">
@@ -177,7 +177,7 @@
                 <a class="btn btn-outline btn-nav" href="mailto:contato@exemplo.com">contato@exemplo.com</a>
             </div>
             <div class="contact-card reveal">
-                <form class="form-grid" id="contact-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
+                <form class="form-grid" id="contact-form" action="https://formspree.io/f/SEU_FORM_ID" method="POST">
                     <div class="form-group">
                         <label for="nome">Nome</label>
                         <input id="nome" name="name" type="text" placeholder="Digite seu nome" required>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
                     <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;">
-                        <button class="btn btn-outline btn-nav btn-full" type="reset">Limpar</button>
+                        <button class="btn btn-outline btn-nav" type="reset">Limpar</button>
                         <button class="btn btn-primary btn-nav" type="submit">Enviar mensagem</button>
                     </div>
                 </form>
@@ -358,7 +358,7 @@
 
         const contactForm = document.getElementById('contact-form');
         const formStatus = document.getElementById('form-status');
-        const formspreeEndpoint = 'https://formspree.io/f/XXXXXXXX';
+        const formspreeEndpoint = contactForm?.getAttribute('action');
 
         function showFormStatus(message, type) {
             if (!formStatus) return;
@@ -369,7 +369,7 @@
             }
         }
 
-        if (contactForm) {
+        if (contactForm && formspreeEndpoint) {
             contactForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
 
@@ -395,13 +395,15 @@
         }
 
         const mpButton = document.getElementById('mercado-pago-btn');
-        const mercadoPagoUrl = 'https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=SEU_INIT_POINT';
 
         if (mpButton) {
-            mpButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                window.location.href = mercadoPagoUrl;
-            });
+            const mercadoPagoUrl = mpButton.getAttribute('href');
+            if (mercadoPagoUrl) {
+                mpButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    window.location.href = mercadoPagoUrl;
+                });
+            }
         }
     </script>
 </body>
