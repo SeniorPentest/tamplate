@@ -1,9 +1,9 @@
 // ===== Navigation / Header =====
-const header = document.querySelector('header');
-const nav = document.querySelector('[data-nav]');
-const navMenu = document.getElementById('nav-links');
-const hamburger = document.getElementById('hamburger');
-const navLinks = () => Array.from(document.querySelectorAll('#nav-links a[href^="#"]'));
+const header = document.getElementById('header') || document.querySelector('[data-header]') || document.querySelector('header');
+const nav = document.querySelector('[data-nav]') || document.querySelector('.nav');
+const navMenu = document.getElementById('nav-links') || document.querySelector('[data-nav-menu]');
+const hamburger = document.getElementById('hamburger') || document.querySelector('[data-menu-toggle]');
+const navLinks = () => (navMenu ? Array.from(navMenu.querySelectorAll('a[href^="#"]')) : []);
 const dropdowns = () => Array.from(document.querySelectorAll('[data-dropdown]'));
 
 const isMobileNav = () => window.innerWidth <= 900;
@@ -227,8 +227,8 @@ function initReveal() {
 
 // ===== Contact Form =====
 function initContactForm() {
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('form-status');
+  const form = document.getElementById('contact-form') || document.querySelector('.form-grid');
+  const statusEl = document.getElementById('form-status') || document.querySelector('.form-status');
   if (!form || !statusEl) return;
 
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -277,7 +277,7 @@ function initContactForm() {
 // ===== Image Fallbacks =====
 function initSnackImageFallbacks() {
   const fallbackSrc = 'https://via.placeholder.com/320x220?text=Imagem';
-  const images = document.querySelectorAll('.product-image img');
+  const images = document.querySelectorAll('.product-image img, .card-img');
 
   images.forEach((img) => {
     img.addEventListener('error', () => {
